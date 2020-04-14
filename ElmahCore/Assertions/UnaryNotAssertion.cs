@@ -33,24 +33,10 @@ namespace ElmahCore.Assertions
 
     internal sealed class UnaryNotAssertion : IAssertion
     {
-        private readonly IAssertion _operand;
-        
-        public UnaryNotAssertion(IAssertion operand)
-        {
-            if (operand == null) 
-                throw new ArgumentNullException("operand");
+        public UnaryNotAssertion(IAssertion operand) => Operand = operand ?? throw new ArgumentNullException("operand");
 
-            _operand = operand;
-        }
+        public IAssertion Operand { get; }
 
-        public IAssertion Operand
-        {
-            get { return _operand; }
-        }
-
-        public bool Test(object context)
-        {
-            return !_operand.Test(context);
-        }
+        public bool Test(object context) => !Operand.Test(context);
     }
 }

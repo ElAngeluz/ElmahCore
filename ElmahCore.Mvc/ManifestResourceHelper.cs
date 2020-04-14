@@ -25,7 +25,6 @@
 
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace ElmahCore.Mvc
 {
@@ -35,7 +34,7 @@ namespace ElmahCore.Mvc
 
     internal static class ManifestResourceHelper
     {
-        public static async Task WriteResourceToStream(Stream outputStream, Type type, string resourceName)
+        public static void WriteResourceToStream(Stream outputStream, Type type, string resourceName)
         {
             if (outputStream == null) throw new ArgumentNullException("outputStream");
             if (resourceName == null) throw new ArgumentNullException("resourceName");
@@ -57,8 +56,8 @@ namespace ElmahCore.Mvc
                 var readLength = inputStream.Read(buffer, 0, buffer.Length);
                 while (readLength > 0)
                 {
-                    await outputStream.WriteAsync(buffer, 0, readLength);
-                    readLength = await inputStream.ReadAsync(buffer, 0, buffer.Length);
+                    outputStream.Write(buffer, 0, readLength);
+                    readLength = inputStream.Read(buffer, 0, buffer.Length);
                 }
             }
         }

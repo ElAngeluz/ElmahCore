@@ -70,10 +70,12 @@ namespace ElmahCore.Mvc.Handlers
             // Stream out the error as formatted XML.
             //
 
-            var settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.NewLineOnAttributes = true;
-            settings.CheckCharacters = false;
+            var settings = new XmlWriterSettings
+            {
+                Indent = true,
+                NewLineOnAttributes = true,
+                CheckCharacters = false
+            };
             var writer = XmlWriter.Create(response.Body, settings);
 
             writer.WriteStartDocument();

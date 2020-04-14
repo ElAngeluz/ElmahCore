@@ -191,8 +191,7 @@ namespace ElmahCore
         static T EndApmizedTask<T>(IAsyncResult asyncResult)
         {
             if (asyncResult == null) throw new ArgumentNullException(nameof(asyncResult));
-            var task = asyncResult as Task<T>;
-            if (task == null) throw new ArgumentException(null, nameof(asyncResult));
+            if (!(asyncResult is Task<T> task)) throw new ArgumentException(null, nameof(asyncResult));
             try
             {
                 return task.Result;

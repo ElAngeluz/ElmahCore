@@ -291,10 +291,11 @@ namespace ElmahCore.Mvc.Notifiers
             // Create the mail, setting up the sender and recipient and priority.
             //
 
-            var mail = new MailMessage();
-            mail.Priority = MailPriority;
-
-            mail.From = new MailAddress(sender);
+            var mail = new MailMessage
+            {
+                Priority = MailPriority,
+                From = new MailAddress(sender)
+            };
             var recipients = recipient.Split(';');
             foreach (var r in recipients)
             {

@@ -8,7 +8,11 @@ namespace ElmahCore
     {
         public string Path { get; set; }
         public string LogPath { get; set; }
-        public string FiltersConfig { get; set; } 
+        public string FiltersConfig { get; set; }
+
+        public string ELMAH_LogError { get; set; }
+        public string ELMAH_GetErrorXml { get; set; }
+        public string ELMAH_GetErrorsXml { get; set; }
 
         public ICollection<IErrorFilter> Filters { get; set; } = new List<IErrorFilter>();
         public ICollection<IErrorNotifier> Notifiers { get; set; } = new List<IErrorNotifier>();

@@ -43,8 +43,7 @@ namespace ElmahCore.Mvc
 
         public HelperResult(Action<TextWriter> action)
         {
-            if (action == null) throw new ArgumentNullException("action");
-            _action = action;
+            _action = action ?? throw new ArgumentNullException("action");
         }
 
         public string ToHtmlString()

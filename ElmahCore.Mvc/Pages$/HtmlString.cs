@@ -50,8 +50,7 @@ namespace ElmahCore.Mvc
 
         public static IHtmlString Encode(object input)
         {
-            IHtmlString html;
-            return null != (html = input as IHtmlString)
+            return input is IHtmlString html
                  ? html
                  : input == null
                  ? Empty

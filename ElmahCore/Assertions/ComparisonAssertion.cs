@@ -46,10 +46,7 @@ namespace ElmahCore.Assertions
         public ComparisonAssertion(Predicate<int> predicate, IContextExpression source, TypeCode type, string value) :
             base(source)
         {
-            if (predicate == null) 
-                throw new ArgumentNullException("predicate");
-
-            _predicate = predicate;
+            _predicate = predicate ?? throw new ArgumentNullException("predicate");
 
             if (type == TypeCode.DBNull 
                 || type == TypeCode.Empty 
@@ -88,15 +85,11 @@ namespace ElmahCore.Assertions
         {
             if (result == null)
                 return false;
-
-            var right = ExpectedValue as IComparable;
             
-            if (right == null)
+            if (!(ExpectedValue is IComparable right))
                 return false;
 
-            var left = Convert.ChangeType(result, right.GetType(), CultureInfo.InvariantCulture) as IComparable;
-            
-            return left != null && TestComparison(left, right);
+            return Convert.ChangeType(result, right.GetType(), CultureInfo.InvariantCulture) is IComparable left && TestComparison(left, right);
         }
 
         protected bool TestComparison(IComparable left, IComparable right)

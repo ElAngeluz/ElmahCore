@@ -19,13 +19,13 @@ namespace ElmahCore.Sql
 			string user,
 			int statusCode,
 			DateTime time,
-			string xml)
+			string xml, string nameSP = "ELMAH_LogError")
 		{
-			var command = new SqlCommand("ELMAH_LogError") {CommandType = CommandType.StoredProcedure};
+			var command = new SqlCommand() {CommandText = nameSP, CommandType = CommandType.StoredProcedure};
 
 			var parameters = command.Parameters;
 
-			parameters.Add("@ErrorId", SqlDbType.UniqueIdentifier).Value = id;
+            parameters.Add("@ErrorId", SqlDbType.UniqueIdentifier).Value = id;
 			parameters.Add("@Application", SqlDbType.NVarChar, MaxAppNameLength).Value = appName;
 			parameters.Add("@Host", SqlDbType.NVarChar, 30).Value = hostName;
 			parameters.Add("@Type", SqlDbType.NVarChar, 100).Value = typeName;
@@ -39,9 +39,9 @@ namespace ElmahCore.Sql
 			return command;
 		}
 
-		public static SqlCommand GetErrorXml(string appName, Guid id)
+		public static SqlCommand GetErrorXml(string appName, Guid id, string nameSP = "ELMAH_GetErrorXml")
 		{
-			var command = new SqlCommand("ELMAH_GetErrorXml") {CommandType = CommandType.StoredProcedure};
+			var command = new SqlCommand() { CommandText = nameSP, CommandType = CommandType.StoredProcedure};
 
 			var parameters = command.Parameters;
 			parameters.Add("@Application", SqlDbType.NVarChar, MaxAppNameLength).Value = appName;
@@ -50,9 +50,9 @@ namespace ElmahCore.Sql
 			return command;
 		}
 
-		public static SqlCommand GetErrorsXml(string appName, int pageIndex, int pageSize)
+		public static SqlCommand GetErrorsXml(string appName, int pageIndex, int pageSize, string nameSP = "ELMAH_GetErrorsXml")
 		{
-			var command = new SqlCommand("ELMAH_GetErrorsXml") {CommandType = CommandType.StoredProcedure};
+			var command = new SqlCommand() { CommandText = nameSP, CommandType = CommandType.StoredProcedure};
 
 			var parameters = command.Parameters;
 

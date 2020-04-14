@@ -29,29 +29,12 @@ namespace ElmahCore.Assertions
 {
 	internal sealed class DelegatedContextExpression : IContextExpression
     {
-        private readonly Func<object, object> _handler;
+        public DelegatedContextExpression(Func<object, object> handler) => Handler = handler ?? throw new ArgumentNullException("handler");
 
-        public DelegatedContextExpression(Func<object, object> handler)
-        {
-            if (handler == null) 
-                throw new ArgumentNullException("handler");
-            
-            _handler = handler;
-        }
+        public Func<object, object> Handler { get; }
 
-        public Func<object, object> Handler
-        {
-            get { return _handler; }
-        }
+        public object Evaluate(object context) => Handler(context);
 
-        public object Evaluate(object context)
-        {
-            return _handler(context);
-        }
-
-        public override string ToString()
-        {
-            return Handler.ToString();
-        }
+        public override string ToString() => Handler.ToString();
     }
 }

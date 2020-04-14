@@ -105,16 +105,13 @@ namespace ElmahCore.Assertions
             return expression ?? new DelegatedContextExpression(EvaluateToException);
         }
 
-        private static object EvaluateToException(object context)
-        {
+        private static object EvaluateToException(object context) =>
             //
             // Assume the reasonable default that the user wants the 
             // exception from the context. If the context is not the 
             // expected type so resort to late-binding.
             //
 
-            var args = context as ExceptionFilterEventArgs;
-            return args != null ? args.Exception : DataBinder.Eval(context, "Exception");
-        }
+            context is ExceptionFilterEventArgs args ? args.Exception : DataBinder.Eval(context, "Exception");
     }
 }

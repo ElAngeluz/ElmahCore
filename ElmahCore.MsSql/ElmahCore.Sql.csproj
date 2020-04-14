@@ -2,20 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-	  <Version>1.2.5</Version>
+	  <Version>1.3.0</Version>
 	  <PackageProjectUrl>https://github.com/ElmahCore/ElmahCore</PackageProjectUrl>
-	  <AssemblyVersion>1.2.5.0</AssemblyVersion>
-	  <FileVersion>1.2.5.0</FileVersion>
+	  <AssemblyVersion>1.3.0.0</AssemblyVersion>
+	  <FileVersion>1.3.0.0</FileVersion>
 	  <AssemblyName>ElmahCore.Sql</AssemblyName>
-	  <PackageId>ElmahCore.Sql</PackageId>
+	  <PackageId>Ansoft.ElmahCore.Sql</PackageId>
 	  <Authors>ElmahCore</Authors>
-	  <Company>ElmahCore</Company>
-	  <Product>ElmahCore.Sql</Product>
+	  <Company>Ansoft</Company>
+	  <Product>Ansoft.ElmahCore.Sql</Product>
 	  <NeutralLanguage>en-001</NeutralLanguage>
-	  <RepositoryUrl>https://www.nuget.org/packages/ElmahCore</RepositoryUrl>
+	  <RepositoryUrl></RepositoryUrl>
 	  <PackageTags>net-core elmah mvc-core asp-net-core asp-net-core-mvc elmah-core netcore netcore2 netcore20 mvc mvc6 aspnetcore aspnetcoremvc</PackageTags>
 	  <Description>ELMAH for ASP.NET Core</Description>
-	  <Copyright>ElmahCore</Copyright>
+	  <Copyright></Copyright>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  </PropertyGroup>
 
@@ -25,6 +25,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ElmahCore\ElmahCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Core">
+      <HintPath>..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.core\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

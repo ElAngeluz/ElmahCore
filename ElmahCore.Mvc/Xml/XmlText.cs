@@ -69,7 +69,7 @@ namespace ElmahCore.Mvc.Xml
             const string pattern = @"&#x(0{0,3}[0-8BCEF]|0{0,2}1[0-F]|D[89A-F][0-9A-F]{2}|FFF[EF]);";
             const RegexOptions options = RegexOptions.IgnoreCase 
                                        | RegexOptions.CultureInvariant;
-            return Regex.Replace(xml, pattern, replacement != null ? replacement : "?", options);
+            return Regex.Replace(xml, pattern, replacement ?? "?", options);
         }
     }
 }

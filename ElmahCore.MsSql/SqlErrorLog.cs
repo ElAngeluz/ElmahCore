@@ -18,11 +18,13 @@ namespace ElmahCore.Sql
 	public class SqlErrorLog : ErrorLog
     {
 
-	    // ReSharper disable once UnusedMember.Global
-	    public SqlErrorLog(IOptions<ElmahOptions> option) : this(option.Value.ConnectionString)
+        // ReSharper disable once UnusedMember.Global
+        public SqlErrorLog(IOptions<ElmahOptions> option) 
+            : this(option.Value.ConnectionString, option.Value.ELMAH_LogError, option.Value.ELMAH_GetErrorXml,option.Value.ELMAH_GetErrorsXml  )
         {
 
         }
+
 
 
         /// <summary>
@@ -30,14 +32,17 @@ namespace ElmahCore.Sql
             /// to use a specific connection string for connecting to the database.
             /// </summary>
 
-            public SqlErrorLog(string connectionString)
+            public SqlErrorLog(string connectionString, string _logError,string _getError,string _GetErrors)
         {
             if (connectionString == null)
                 throw new ArgumentNullException(nameof(connectionString));
 
             if (connectionString.Length == 0)
                 throw new ArgumentException(null, nameof(connectionString));
-            
+
+            ELMAH_LogError = _logError;
+            ELMAH_GetErrorXml = _getError;
+            ELMAH_GetErrorsXml = _GetErrors;
             ConnectionString = connectionString;
         }
 
@@ -52,6 +57,9 @@ namespace ElmahCore.Sql
         /// </summary>
         
         public virtual string ConnectionString { get; }
+        public virtual string ELMAH_LogError { get; }
+        public virtual string ELMAH_GetErrorXml { get; }
+        public virtual string ELMAH_GetErrorsXml { get; }
 
 	    /// <summary>
         /// Logs an error to the database.
@@ -74,7 +82,7 @@ namespace ElmahCore.Sql
             using (SqlCommand command = CommandExtension.LogError(
                 id, ApplicationName, 
                 error.HostName, error.Type, error.Source, error.Message, error.User,
-                error.StatusCode, error.Time.ToUniversalTime(), errorXml))
+                error.StatusCode, error.Time.ToUniversalTime(), errorXml, ELMAH_LogError))
             {
                 command.Connection = connection;
                 connection.Open();
@@ -97,7 +105,7 @@ namespace ElmahCore.Sql
                 throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, null);
 
             using (var connection = new SqlConnection(ConnectionString))
-            using (var command = CommandExtension.GetErrorsXml(ApplicationName, pageIndex, pageSize))
+            using (var command = CommandExtension.GetErrorsXml(ApplicationName, pageIndex, pageSize, ELMAH_GetErrorsXml))
             {
                 command.Connection = connection;
                 connection.Open();
@@ -160,7 +168,7 @@ namespace ElmahCore.Sql
             string errorXml;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
-            using (SqlCommand command = CommandExtension.GetErrorXml(ApplicationName, errorGuid))
+            using (SqlCommand command = CommandExtension.GetErrorXml(ApplicationName, errorGuid, ELMAH_GetErrorXml))
             {
                 command.Connection = connection;
                 connection.Open();

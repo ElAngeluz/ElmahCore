@@ -113,14 +113,12 @@ namespace ElmahCore.Assertions
             if (index == null) throw new ArgumentNullException("index");
 
             var isIntegralIndex = index is int;
-        
-            var array = obj as Array;
-            if (array != null && isIntegralIndex)
-                return array.GetValue((int) index);
-        
-            var list = obj as IList;
-            if (list != null && isIntegralIndex)
-                return list[(int) index];
+
+            if (obj is Array array && isIntegralIndex)
+                return array.GetValue((int)index);
+
+            if (obj is IList list && isIntegralIndex)
+                return list[(int)index];
 
             var property = FindIndexerProperty(obj.GetType(), index.GetType());
 

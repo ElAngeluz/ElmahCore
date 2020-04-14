@@ -21,7 +21,7 @@ namespace ElmahCore.Assertions
         {
             Debug.Assert(e != null);
 
-            _source = source == null ? this : source;
+            _source = source ?? (this);
             _exception = e;
             _context = context;
         }
@@ -69,10 +69,8 @@ namespace ElmahCore.Assertions
                 if (!_statusCodeInitialized)
                 {
                     _statusCodeInitialized = true;
-
-                    var exception = Exception as HttpException;
-
-                    if (exception != null)
+                    
+                    if (Exception is HttpException exception)
                         _httpStatusCode = exception.StatusCode;
                 }
 

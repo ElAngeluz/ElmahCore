@@ -41,35 +41,15 @@ namespace ElmahCore.Assertions
 
     internal class RegexMatchAssertion : DataBoundAssertion
     {
-        private readonly Regex _regex;
-        
-        public RegexMatchAssertion(IContextExpression source, Regex regex) : 
-            base(source)
-        {
-            if (regex == null) 
-                throw new ArgumentNullException("regex");
+        public RegexMatchAssertion(IContextExpression source, Regex regex) :
+            base(source) => RegexObject = regex ?? throw new ArgumentNullException("regex");
 
-            _regex = regex;
-        }
+        public IContextExpression Source => Expression;
 
-        public IContextExpression Source
-        {
-            get { return Expression; }
-        }
+        public Regex RegexObject { get; }
 
-        public Regex RegexObject
-        {
-            get { return _regex; }
-        }
+        protected override bool TestResult(object result) => TestResultMatch(Convert.ToString(result, CultureInfo.InvariantCulture));
 
-        protected override bool TestResult(object result)
-        {
-            return TestResultMatch(Convert.ToString(result, CultureInfo.InvariantCulture));
-        }
-
-        protected virtual bool TestResultMatch(string result)
-        {
-            return RegexObject.Match(result).Success;
-        }
+        protected virtual bool TestResultMatch(string result) => RegexObject.Match(result).Success;
     }
 }

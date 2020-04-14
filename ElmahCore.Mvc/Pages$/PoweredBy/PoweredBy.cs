@@ -52,8 +52,7 @@ namespace ElmahCore.Mvc.PoweredBy
 #if NET_3_5 || NET_4_0
                 return (object[]) CachedAboutRef.Target;
 #else
-                object[] tuple;
-                return CachedAboutRef.TryGetTarget(out tuple) ? tuple : null;
+                return CachedAboutRef.TryGetTarget(out object[] tuple) ? tuple : null;
 #endif
             }
             set
@@ -98,8 +97,8 @@ namespace ElmahCore.Mvc.PoweredBy
 
             var version     = assembly.GetName().Version;
             var fileVersion = attributes.Version != null ? new Version(attributes.Version.Version) : null;
-            var product     = attributes.Product != null ? attributes.Product.Product : null;
-            var copyright   = attributes.Copyright != null ? attributes.Copyright.Copyright : null;
+            var product     = attributes.Product?.Product;
+            var copyright   = attributes.Copyright?.Copyright;
 
             //
             // Cache for next time if the cache is available.

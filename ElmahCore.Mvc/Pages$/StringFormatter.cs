@@ -72,7 +72,7 @@ namespace ElmahCore.Mvc
         public static string Format(string format,
             IFormatProvider provider, StringFormatTokenBindingHandler binder, params object[] args)
         {
-            return FormatImpl(format, provider, binder != null ? binder : DefaultTokenBinder, args);
+            return FormatImpl(format, provider, binder ?? DefaultTokenBinder, args);
         }
 
         private static string FormatImpl(string format,
@@ -190,8 +190,7 @@ namespace ElmahCore.Mvc
 
         public static int TryParseUnsignedInteger(string str)
         {
-            int result;
-            return int.TryParse(str, NumberStyles.None, CultureInfo.InvariantCulture, out result) 
+            return int.TryParse(str, NumberStyles.None, CultureInfo.InvariantCulture, out int result)
                  ? result : -1;
         }
     }

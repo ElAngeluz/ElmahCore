@@ -35,18 +35,9 @@ namespace ElmahCore.Assertions
     {
         private readonly IContextExpression _expression;
 
-        protected DataBoundAssertion(IContextExpression expression)
-        {
-            if (expression == null) 
-                throw new ArgumentNullException("expression");
+        protected DataBoundAssertion(IContextExpression expression) => _expression = expression ?? throw new ArgumentNullException("expression");
 
-            _expression = expression;
-        }
-
-        protected IContextExpression Expression
-        {
-            get { return _expression; }
-        }
+        protected IContextExpression Expression => _expression;
 
         public virtual bool Test(object context)
         {
